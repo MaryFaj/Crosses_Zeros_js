@@ -1,0 +1,39 @@
+
+h2{
+	margin: 50px auto;
+	text-align: center;
+}
+.game_field{
+	width: 500px;
+	height: 500px;
+	border: 1px solid black;
+	margin: 100px auto;
+	font-size: 36px;
+}
+.game_field td{
+	border: 1px solid black;
+	text-align: center;
+	width: 100px;
+}
+
+.game_field tr{
+	border: 1px solid black;
+	height: 100px;
+}
+.zero{
+	background-image:url('img/zero1.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+.cross{
+	background-image:url('img/cross1.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.win_message{
+	color: red;
+	text-transform: uppercase;
+	font-size: 36px;
+	text-align: center;
+}
