@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <title>Крестики-нолики</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="style.css" rel="stylesheet" type="text/css" media="all"/>
 </head>
 <body>
@@ -25,20 +25,19 @@
    <td id="33"></td>
    </tr>
    </table>
-   
-   
+
    <script type="text/javascript">
-   
+
    let view = {
    	gameField: document.getElementById('game_field_tbl'),
-   	
+
    	displayZero: function (id) {
    		let cell = document.getElementById(id);
    		cell.setAttribute("class","zero");
    	},
    	displayCross: function (id) {
    		let cell = document.getElementById(id);
-   		cell.setAttribute("class","cross");   		
+   		cell.setAttribute("class","cross");
    	},
    	displayWinCrosses: function () {
    		let winMessage = document.getElementById('win_message');
@@ -53,13 +52,13 @@
    		winMessage.innerHTML ='ничья!';
    	}
    };
-  
-   				
+
+
    let model= {
    	numOfLines: 8,
    	isGameOver: false,
    	usedIds: [],
-   	  	
+
    	lines: [{ ids: ['11','12','13'],zeros: ['','',''],crosses: ['','',''] },
    				{ ids: ['21','22','23'],zeros: ['','',''],crosses: ['','',''] },
    				{ ids: ['31','32','33'],zeros: ['','',''],crosses: ['','',''] },
@@ -68,19 +67,19 @@
    				{ ids: ['13','23','33'],zeros: ['','',''],crosses: ['','',''] },
    				{ ids: ['11','22','33'],zeros: ['','',''],crosses: ['','',''] },
    				{ ids: ['13','22','31'],zeros: ['','',''],crosses: ['','',''] }],
-   				
+
    	move: function (id,player) {
    				for (let i =0; i<this.numOfLines; i++) {
    					let line = this.lines[i];
    					for (let k =0; k<3; k++){
    						if (line.ids[k] == id) {
-   							
+
    							if((player=='human') && (line.zeros[k]!=='1') && (line.crosses[k]!=='1')){
-   							
+
    							this.usedIds.push(id);
    								line.crosses[k]='1';
    								view.displayCross(id);
-									
+
 									if(this.isWinCrosses(line)){
 										view.displayWinCrosses();
 										this.isGameOver = true;
@@ -90,14 +89,14 @@
 										view.displayDeadHeat();
 										this.isGameOver = true;
 										return;
-									}   								
-   								
+									}
+
    							} else if((player=='computer') && (line.crosses[k]!=='1') && (line.zeros[k]!=='1')) {
-   						
+
    							this.usedIds.push(id);
    								line.zeros[k]='1';
    								view.displayZero(id);
-   								
+
 									if(this.isWinZeros(line)){
 										view.displayWinZeros();
 										this.isGameOver = true;
@@ -107,16 +106,16 @@
 										view.displayDeadHeat();
 										this.isGameOver = true;
 										return;
-									}   																   								
-   								  								
+									}
+
    							} else {
    								continue;
    							}
    						}
-   					}  					
-   				}   				
+   					}
+   				}
    			},
-   			
+
    	isWinZeros: function (line) {
    				for (let i = 0; i<3; i++) {
    					if((line.zeros[i]!=='1')){
@@ -125,7 +124,7 @@
    				}
    				return true;
    			},
-   			
+
    	isWinCrosses: function (line) {
    				for (let i = 0; i<3; i++) {
    					if((line.crosses[i]!=='1')){
@@ -134,20 +133,20 @@
    				}
    				return true;
    			},
-   			
-   	isDeadHeat:	function () {   		
+
+   	isDeadHeat:	function () {
 			for (line of this.lines) {
 				if (helper.findEmptyCellOfLine(line)) {
 					return false;
-				}			
+				}
 			}
 			return true;
    		}
    };
-  
-   
+
+
    let helper = {
-   	
+
    	findLineWhichHasTwoCrossesAndNooneZero: function (lines, numOfLines) {
    		for (let i =0; i<numOfLines; i++) {
    			let line = lines[i];
@@ -161,12 +160,12 @@
    				}
    			}
    			if((crosses>1) && (zeros==0)){
-   				return line;  						
-   			}  		
+   				return line;
+   			}
    		}
    		return false;
    	},
-   	
+
    	findLineWhichHasTwoZerosAndNooneCrosses: function (lines, numOfLines) {
    		for (let i =0; i<numOfLines; i++) {
    			let line = lines[i];
@@ -180,12 +179,12 @@
    				}
    			}
    			if((zeros>1) && (crosses==0)){
-   				return line;   						
-   			}  		
+   				return line;
+   			}
    		}
    		return false;
    	},
-   	
+
    	findLineWhichHasZeroAndNooneCrosses: function (lines, numOfLines) {
    		for (let i =0; i<numOfLines; i++) {
    			let line = lines[i];
@@ -199,12 +198,12 @@
    				}
    			}
    			if((zeros>0) && (crosses==0)){
-   				return line;					
-   			}  		
+   				return line;
+   			}
    		}
    		return false;
    	},
-   	
+
    	findLineWhithoutCrossesOrHasOneCross: function (lines, numOfLines) {
    		for (let i =0; i<numOfLines; i++) {
    			let line = lines[i];
@@ -215,27 +214,27 @@
    				}
    			}
    				if(crosses==0){
-   					return line;					
+   					return line;
    				} else if (crosses == 1) {
    					return line;
-   				}  		
+   				}
    			}
    			return false;
    	},
-   	
-   	findEmptyCellOfLine: function (line) {  	
+
+   	findEmptyCellOfLine: function (line) {
    		for (let n=0; n<3; n++) {
    			if(model.usedIds.indexOf(line.ids[n])==-1){
-   				return line.ids[n];			
+   				return line.ids[n];
    			}
    		}
    		return false;
-   	}   
+   	}
    };
-   
-      
+
+
    let controller = {
-   
+
    	selectLineForComputerMove: function (lines, numOfLines) {
    		let line = helper.findLineWhichHasTwoZerosAndNooneCrosses(lines, numOfLines);
     		if(!line){
@@ -253,9 +252,9 @@
     			}
     		} else {
     			return line;
-    		}    	
+    		}
    	},
-   	
+
    	computerMove: function () {
    	 if (model.isGameOver) {
    	 	return;
@@ -264,27 +263,28 @@
     		let id = helper.findEmptyCellOfLine(line);
     		model.move(id,'computer');
    	},
-   	
+
    	humanMove: function (id) {
    		model.move(id,'human');
    	}
-   	   	
+
    };
-   
+
  // Запуск игры по клику на игровое поле
-   
+
    view.gameField.onclick = function (e) {
-   		
+
    		if(model.isGameOver){
    			console.log('game is over!');
    			return;
    		}
+   		
    		let id = e.target.id;
    		controller.humanMove(id);
    		controller.computerMove();
-   		
+
    	}
-	
+
    </script>
 </body>
 </html>
